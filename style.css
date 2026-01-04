@@ -1,0 +1,51 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.spinner {
+    width: 48px;
+    height: 48px;
+    border: 5px solid #FFF;
+    border-bottom-color: #6366f1;
+    border-radius: 50%;
+    animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #0f172a; }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 10px; }
+::-webkit-scrollbar-thumb:hover { background: #6366f1; }
+
+.manga-card {
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.manga-card:hover { transform: translateY(-5px); }
+
+/* Reader Modes */
+.reader-webtoon img {
+    display: block;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 800px;
+}
+.reader-paged {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.reader-paged img {
+    max-height: 100vh;
+    max-width: 100%;
+    object-fit: contain;
+}
+.active-mode {
+    background-color: #6366f1 !important;
+    color: white !important;
+}
+
+.text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
