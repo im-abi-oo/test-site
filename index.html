@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Manhwa Pro | مرجع تخصصی منهوا</title>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/misc/Farsi-Digits/font-face.css" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366f1', // Indigo
+                        secondary: '#f43f5e', // Rose
+                        dark: '#0f172a',
+                        'dark-surface': '#1e293b',
+                        'dark-card': '#334155'
+                    },
+                    fontFamily: { sans: ['Vazirmatn', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-gray-100 dark:bg-dark text-gray-800 dark:text-gray-100 font-sans overflow-x-hidden selection:bg-secondary selection:text-white">
+
+    <div id="loader" class="fixed inset-0 z-[100] bg-dark flex flex-col items-center justify-center transition-opacity duration-500">
+        <div class="spinner"></div>
+        <p class="mt-4 text-primary font-bold animate-pulse text-lg">در حال بارگذاری...</p>
+    </div>
+
+    <nav class="fixed top-0 w-full z-40 bg-white/90 dark:bg-dark-surface/90 backdrop-blur border-b border-gray-200 dark:border-white/5 shadow-sm">
+        <div class="container mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <button id="mobile-menu-btn" class="lg:hidden text-2xl"><i class="fa-solid fa-bars"></i></button>
+                <a href="#/" class="text-2xl font-black bg-gradient-to-l from-primary to-secondary bg-clip-text text-transparent">
+                    MANHWA<span class="text-primary">PRO</span>
+                </a>
+            </div>
+
+            <div class="hidden lg:flex gap-6 font-bold text-sm">
+                <a href="#/" class="hover:text-primary transition">خانه</a>
+                <a href="#/popular" class="hover:text-primary transition">محبوب‌ها</a>
+                <a href="#/genres" class="hover:text-primary transition">دسته‌بندی‌ها</a>
+            </div>
+
+            <div class="flex items-center gap-3">
+                <button id="theme-toggle" class="p-2 hover:bg-white/10 rounded-full transition"><i class="fa-solid fa-sun"></i></button>
+                <div id="auth-area">
+                    </div>
+            </div>
+        </div>
+    </nav>
+
+    <div id="sidebar" class="fixed inset-0 z-40 bg-black/50 hidden opacity-0 transition-opacity">
+        <div class="absolute right-0 top-0 h-full w-64 bg-dark-surface p-6 shadow-2xl transform translate-x-full transition-transform">
+            <button id="close-sidebar" class="mb-6 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <div class="flex flex-col gap-4 font-bold">
+                <a href="#/" class="sidebar-link"><i class="fa-solid fa-home ml-2"></i> خانه</a>
+                <a href="#/popular" class="sidebar-link"><i class="fa-solid fa-fire ml-2"></i> محبوب‌ها</a>
+                <a href="#/genres" class="sidebar-link"><i class="fa-solid fa-tags ml-2"></i> ژانرها</a>
+                <a href="#/profile" class="sidebar-link hidden auth-req"><i class="fa-solid fa-user ml-2"></i> پروفایل</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="app" class="pt-20 pb-20 container mx-auto px-2 md:px-4 min-h-screen">
+        </main>
+
+    <div id="reader-overlay" class="fixed inset-0 z-[60] bg-black hidden flex flex-col">
+        <div id="reader-head" class="h-14 bg-dark-surface/95 backdrop-blur flex items-center justify-between px-4 border-b border-white/10 transition-transform duration-300">
+            <button id="reader-close" class="text-white hover:text-secondary transition"><i class="fa-solid fa-arrow-right"></i></button>
+            <h4 id="reader-title" class="text-white font-bold text-sm truncate max-w-[60%]"></h4>
+            <button id="reader-settings-btn" class="text-white hover:text-primary transition"><i class="fa-solid fa-gear"></i></button>
+        </div>
+
+        <div id="reader-container" class="flex-1 overflow-y-auto overflow-x-hidden relative bg-[#121212]">
+            <div id="reader-pages" class="min-h-full flex flex-col items-center mx-auto transition-all"></div>
+            
+            <div id="zone-prev" class="absolute inset-y-0 left-0 w-[30%] z-10 cursor-pointer hidden"></div>
+            <div id="zone-next" class="absolute inset-y-0 right-0 w-[30%] z-10 cursor-pointer hidden"></div>
+            <div id="zone-menu" class="absolute inset-y-0 left-[30%] right-[30%] z-10 cursor-pointer hidden"></div>
+        </div>
+
+        <div id="reader-settings" class="absolute bottom-0 w-full bg-dark-surface rounded-t-2xl p-5 transform translate-y-full transition-transform duration-300 shadow-[0_-5px_20px_rgba(0,0,0,0.5)]">
+            <div class="max-w-md mx-auto space-y-4">
+                <div class="flex justify-between text-white mb-2">
+                    <span class="font-bold">تنظیمات</span>
+                    <button id="close-settings"><i class="fa-solid fa-chevron-down"></i></button>
+                </div>
+                
+                <div class="bg-dark-card p-1 rounded-lg flex">
+                    <button class="flex-1 py-2 rounded text-sm font-bold transition mode-btn" data-mode="webtoon">Webtoon</button>
+                    <button class="flex-1 py-2 rounded text-sm font-bold transition mode-btn" data-mode="paged">کتابی</button>
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-400 block mb-2">اندازه تصویر</label>
+                    <input type="range" id="zoom-slider" min="50" max="100" value="100" class="w-full accent-primary h-2 bg-dark-card rounded-lg appearance-none">
+                </div>
+
+                <button id="fs-toggle" class="w-full bg-dark-card hover:bg-white/10 text-white py-3 rounded-xl font-bold transition">
+                    <i class="fa-solid fa-expand ml-2"></i> تمام صفحه
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="auth-modal" class="fixed inset-0 z-[70] bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4 opacity-0 transition-opacity">
+        <div class="bg-dark-surface w-full max-w-sm rounded-2xl p-6 shadow-2xl transform scale-95 transition-transform">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white" id="auth-title">ورود</h3>
+                <button id="auth-close" class="text-gray-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <form id="auth-form" class="space-y-4">
+                <input type="text" name="username" placeholder="نام کاربری" class="w-full bg-dark-card text-white p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary" required>
+                <input type="password" name="password" placeholder="رمز عبور" class="w-full bg-dark-card text-white p-3 rounded-xl outline-none focus:ring-2 focus:ring-primary" required>
+                <button type="submit" class="w-full bg-primary hover:bg-indigo-600 text-white font-bold py-3 rounded-xl transition shadow-lg shadow-primary/30">ورود</button>
+            </form>
+            <p class="mt-4 text-center text-gray-400 text-sm cursor-pointer" id="auth-switch">حساب ندارید؟ ثبت نام کنید</p>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
